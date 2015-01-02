@@ -105,11 +105,13 @@
     <Compile Include="AntiForgery\AjaxAntiForgeryDataSerializer.cs" />
     <Compile Include="AntiForgery\AjaxValidateAntiForgeryTokenAttribute.cs" />
     <Compile Include="AntiForgery\AjaxAntiForgeryHtmlExtensions.cs" />
+    <Compile Include="DbLogger.cs" />
     <Compile Include="Extensions\ModelStateExtensions.cs" />
     <Compile Include="Filters\HeaderValidationFilterAttribute.cs" />
     <Compile Include="Filters\StopwatchFilterAttribute.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\HttpRequestHeadersExtensions.cs" />
+    <Compile Include="GlobalAsaxManager.cs" />
     <Compile Include="Minifier.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

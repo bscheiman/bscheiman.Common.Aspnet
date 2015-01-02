@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+ <package>
+   <metadata>
+     <id>bscheiman.Common.Aspnet</id>
+     <version>$version$</version>
+     <authors>Boris Scheiman</authors>
+     <projectUrl>https://github.com/bscheiman/bscheiman.Common.Aspnet</projectUrl>
+     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+     <description>Useful extensions/tools/utils I keep using all over the place. Hit me up (@bscheiman) if you need help.</description>
+     <language>en-US</language>
+   </metadata>
+   
+   <files>
+	   <file src="bin\Release\bscheiman.Common.Aspnet.dll" target="lib\net40\bscheiman.Common.Aspnet.dll" />
+   </files>
+</package>
