@@ -117,6 +117,9 @@
     <Compile Include="Extensions\HttpRequestHeadersExtensions.cs" />
     <Compile Include="GlobalAsaxManager.cs" />
     <Compile Include="Interfaces\IHasApiKeys.cs" />
+    <Compile Include="Interfaces\IHasDates.cs" />
+    <Compile Include="Interfaces\IHasUsers.cs" />
+    <Compile Include="Interfaces\ISoftDelete.cs" />
     <Compile Include="Minifier.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
