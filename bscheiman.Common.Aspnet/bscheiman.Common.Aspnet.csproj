@@ -105,6 +105,7 @@
     <Compile Include="AntiForgery\AjaxAntiForgeryDataSerializer.cs" />
     <Compile Include="AntiForgery\AjaxValidateAntiForgeryTokenAttribute.cs" />
     <Compile Include="AntiForgery\AjaxAntiForgeryHtmlExtensions.cs" />
+    <Compile Include="Binder\JsonNetModelBinder.cs" />
     <Compile Include="DbLogger.cs" />
     <Compile Include="Extensions\ModelStateExtensions.cs" />
     <Compile Include="Filters\HeaderValidationFilterAttribute.cs" />
