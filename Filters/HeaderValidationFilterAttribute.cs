@@ -3,7 +3,6 @@ using System.Data.Entity;
 using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
-using bscheiman.Common.Aspnet.HtmlExtensions;
 using bscheiman.Common.Extensions;
 using bscheiman.Common.Util;
 

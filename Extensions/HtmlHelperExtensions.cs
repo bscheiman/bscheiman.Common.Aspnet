@@ -8,7 +8,7 @@ using bscheiman.Common.Extensions;
 
 #endregion
 
-namespace bscheiman.Common.Aspnet.HtmlExtensions {
+namespace bscheiman.Common.Aspnet.Extensions {
     public static class HtmlHelperExtensions {
         public static HtmlString ShowErrors(this HtmlHelper html, string[] errors) {
             if (errors == null || errors.Length == 0)
