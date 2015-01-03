@@ -7,8 +7,8 @@ using System.Web.Mvc;
 namespace bscheiman.Common.Aspnet.Extensions {
     public static class ActionExecutingContextExtensions {
         [DebuggerStepThrough]
-        public static void Log(this ActionExecutingContext ctx) {
-            if (ctx.HttpContext.Request.IsLocal)
+        public static void Log(this ActionExecutingContext ctx, bool skipLocal = true) {
+            if (skipLocal && ctx.HttpContext.Request.IsLocal)
                 return;
 
             Util.Log.Info("Website hit from {0}: {1}/{2} ({3} - {4})", ctx.HttpContext.Request.UserHostAddress,

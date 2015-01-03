@@ -6,8 +6,8 @@ using System.Web.Http.Controllers;
 
 namespace bscheiman.Common.Aspnet.Extensions {
     public static class HttpControllerContextExtensions {
-        public static void Log(this HttpControllerContext ctx) {
-            if (ctx.Request.IsLocal())
+        public static void Log(this HttpControllerContext ctx, bool skipLocal = true) {
+            if (skipLocal && ctx.Request.IsLocal())
                 return;
         }
     }

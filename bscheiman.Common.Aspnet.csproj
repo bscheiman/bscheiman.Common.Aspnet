@@ -106,6 +106,7 @@
     <Compile Include="AntiForgery\AjaxValidateAntiForgeryTokenAttribute.cs" />
     <Compile Include="AntiForgery\AjaxAntiForgeryHtmlExtensions.cs" />
     <Compile Include="Binder\JsonNetModelBinder.cs" />
+    <Compile Include="Database\BaseEntity.cs" />
     <Compile Include="DbLogger.cs" />
     <Compile Include="Extensions\ActionExecutingContextExtensions.cs" />
     <Compile Include="Extensions\HttpControllerContextExtensions.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\HttpRequestHeadersExtensions.cs" />
     <Compile Include="GlobalAsaxManager.cs" />
+    <Compile Include="Interfaces\IHasApiKeys.cs" />
     <Compile Include="Minifier.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
