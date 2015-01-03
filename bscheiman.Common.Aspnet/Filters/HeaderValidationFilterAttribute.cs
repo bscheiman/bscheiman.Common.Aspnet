@@ -10,7 +10,7 @@ using bscheiman.Common.Util;
 #endregion
 
 namespace bscheiman.Common.Aspnet.Filters {
-    public class HeaderValidationFilterAttribute<T> : ActionFilterAttribute where T : DbContext, new() {
+    /*public class HeaderValidationFilterAttribute<T> : ActionFilterAttribute where T : DbContext, new() {
         public override void OnActionExecuting(HttpActionContext context) {
             using (var database = new T()) {
                 string apiKey = context.Request.Headers.Get("X-ApiKey");
@@ -55,5 +55,5 @@ namespace bscheiman.Common.Aspnet.Filters {
                 }.ToJson())
             };
         }
-    }
+    }*/
 }

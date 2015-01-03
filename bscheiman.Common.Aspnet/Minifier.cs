@@ -110,6 +110,13 @@ namespace bscheiman.Common.Aspnet {
 
             return this;
         }
+
+        public void ProcessRequest(HttpContext context) {
+        }
+
+        public bool IsReusable {
+            get { return false; }
+        }
     }
 
     /*public class LoadResources : IHttpHandler {
