@@ -119,7 +119,7 @@
     <Compile Include="Results\JsonNetResult.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Embedded\time.js" />
+    <EmbeddedResource Include="Embedded\time.js" />
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
