@@ -7,7 +7,7 @@ using bscheiman.Common.Extensions;
 
 #endregion
 
-namespace bscheiman.Common.Aspnet {
+namespace bscheiman.Common.Aspnet.Utils {
     public enum MinifierType {
         None,
         Css,

@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 #endregion
 
-namespace bscheiman.Common.Aspnet {
+namespace bscheiman.Common.Aspnet.Database {
     public class DbLogger : DbCommandInterceptor {
         public override void NonQueryExecuting(DbCommand command, DbCommandInterceptionContext<int> interceptionContext) {
             CommandExecuting(base.NonQueryExecuting, command, interceptionContext);
