@@ -107,6 +107,8 @@
     <Compile Include="AntiForgery\AjaxAntiForgeryHtmlExtensions.cs" />
     <Compile Include="Binder\JsonNetModelBinder.cs" />
     <Compile Include="DbLogger.cs" />
+    <Compile Include="Extensions\ActionExecutingContextExtensions.cs" />
+    <Compile Include="Extensions\HttpControllerContextExtensions.cs" />
     <Compile Include="Extensions\ModelStateExtensions.cs" />
     <Compile Include="Filters\HeaderValidationFilterAttribute.cs" />
     <Compile Include="Filters\StopwatchFilterAttribute.cs" />
