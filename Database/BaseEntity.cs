@@ -5,8 +5,11 @@ using bscheiman.Common.Aspnet.Interfaces;
 #endregion
 
 namespace bscheiman.Common.Aspnet.Database {
-    public class BaseEntity : IHasUsers, IHasDates, ISoftDelete {
-        public long Id { get; set; }
+    public class BaseEntity : BaseEntity<long> {
+    }
+
+    public class BaseEntity<T> : IHasUsers, IHasDates, ISoftDelete {
+        public T Id { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? DateModified { get; set; }
         public string UserCreated { get; set; }
