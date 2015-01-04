@@ -16,6 +16,9 @@ namespace bscheiman.Common.Aspnet.Database {
         where TUserLogin : IdentityUserLogin<TKey>
         where TUserRole : IdentityUserRole<TKey>
         where TUserClaim : IdentityUserClaim<TKey> {
+        public TrackingDbContext(string ctx) : base(ctx) {
+        }
+
         public override int SaveChanges() {
             var hasUsers =
                 ChangeTracker.Entries()
