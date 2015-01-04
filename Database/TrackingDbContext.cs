@@ -10,7 +10,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 #endregion
 
 namespace bscheiman.Common.Aspnet.Database {
-    public class TrackingDbContext<TUser, TRole, TKey, TUserLogin, TUserRole, TUserClaim> : DbContext
+    public class TrackingDbContext<TUser, TRole, TKey, TUserLogin, TUserRole, TUserClaim> :
+        IdentityDbContext<TUser, TRole, TKey, TUserLogin, TUserRole, TUserClaim>
         where TUser : IdentityUser<TKey, TUserLogin, TUserRole, TUserClaim>
         where TRole : IdentityRole<TKey, TUserRole>
         where TUserLogin : IdentityUserLogin<TKey>
