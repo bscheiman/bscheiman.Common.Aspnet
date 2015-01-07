@@ -73,7 +73,7 @@ namespace bscheiman.Common.Aspnet.Controllers {
             return Json(new BaseJson {
                 Valid = true,
                 Message = message,
-                Code = 0
+                Code = code
             }, JsonRequestBehavior.AllowGet);
         }
     }
