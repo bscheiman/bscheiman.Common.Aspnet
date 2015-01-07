@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using bscheiman.Common.Aspnet.Extensions;
+using bscheiman.Common.Aspnet.Objects;
 using bscheiman.Common.Aspnet.Results;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
@@ -48,9 +49,11 @@ namespace bscheiman.Common.Aspnet.Controllers {
             get { return Authentication.User; }
         }
 
-        protected ActionResult ErrorJson() {
-            return Json(new {
-                status = false
+        protected ActionResult ErrorJson(int code, string message) {
+            return Json(new BaseJson {
+                Valid = false,
+                Message = message,
+                Code = 0
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -66,9 +69,11 @@ namespace bscheiman.Common.Aspnet.Controllers {
             base.OnActionExecuting(ctx);
         }
 
-        protected ActionResult SuccessJson() {
-            return Json(new {
-                status = true
+        protected ActionResult SuccessJson(int code = 0, string message = "") {
+            return Json(new BaseJson {
+                Valid = true,
+                Message = message,
+                Code = 0
             }, JsonRequestBehavior.AllowGet);
         }
     }
