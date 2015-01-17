@@ -140,6 +140,7 @@
     <Compile Include="Controllers\BaseLoggingController.cs" />
     <Compile Include="Database\BaseEntity.cs" />
     <Compile Include="Database\DbLogger.cs" />
+    <Compile Include="Database\ForeignKeyNamingConvention.cs" />
     <Compile Include="Database\TrackingDbContext.cs" />
     <Compile Include="Extensions\ActionExecutingContextExtensions.cs" />
     <Compile Include="Extensions\HttpControllerContextExtensions.cs" />
