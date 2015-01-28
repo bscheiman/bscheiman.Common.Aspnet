@@ -10,8 +10,8 @@ namespace bscheiman.Common.Aspnet.Database {
 
     public class BaseEntity<T> : IHasUsers, IHasDates, ISoftDelete {
         public T Id { get; set; }
-        public DateTime? DateCreated { get; set; }
-        public DateTime? DateModified { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
         public string UserCreated { get; set; }
         public string UserModified { get; set; }
         public bool IsDeleted { get; set; }
