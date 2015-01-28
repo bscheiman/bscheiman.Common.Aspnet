@@ -18,15 +18,21 @@ namespace bscheiman.Common.Aspnet.Database {
         }
 
         public override int SaveChanges() {
-            return TrackingHelper.SaveChanges(this);
+            TrackingHelper.TrackEntities(this);
+
+            return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync() {
-            return TrackingHelper.SaveChangesAsync(this);
+            TrackingHelper.TrackEntities(this);
+
+            return base.SaveChangesAsync();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken) {
-            return TrackingHelper.SaveChangesAsync(this, cancellationToken);
+            TrackingHelper.TrackEntities(this);
+
+            return base.SaveChangesAsync(cancellationToken);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
@@ -41,15 +47,21 @@ namespace bscheiman.Common.Aspnet.Database {
         }
 
         public override int SaveChanges() {
-            return TrackingHelper.SaveChanges(this);
+            TrackingHelper.TrackEntities(this);
+
+            return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync() {
-            return TrackingHelper.SaveChangesAsync(this);
+            TrackingHelper.TrackEntities(this);
+
+            return base.SaveChangesAsync();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken) {
-            return TrackingHelper.SaveChangesAsync(this, cancellationToken);
+            TrackingHelper.TrackEntities(this);
+
+            return base.SaveChangesAsync(cancellationToken);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {

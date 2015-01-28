@@ -1,8 +1,6 @@
 ﻿#region
 using System.Data.Entity;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 using bscheiman.Common.Aspnet.Interfaces;
 using bscheiman.Common.Extensions;
@@ -12,24 +10,7 @@ using bscheiman.Common.Util;
 
 namespace bscheiman.Common.Aspnet.Database {
     internal static class TrackingHelper {
-        public static Task<int> SaveChangesAsync(DbContext ctx) {
-            TrackEntities(ctx);
-
-            return ctx.SaveChangesAsync();
-        }
-
-        public static Task<int> SaveChangesAsync(DbContext ctx, CancellationToken cancellationToken) {
-            TrackEntities(ctx);
-            return ctx.SaveChangesAsync(cancellationToken);
-        }
-
-        internal static int SaveChanges(DbContext ctx) {
-            TrackEntities(ctx);
-
-            return ctx.SaveChanges();
-        }
-
-        private static void TrackEntities(DbContext ctx) {
+        internal static void TrackEntities(DbContext ctx) {
             var hasUsers =
                 ctx.ChangeTracker.Entries()
                    .Where(x => x.Entity.Is<IHasUsers>() && (x.State == EntityState.Added || x.State == EntityState.Modified));
