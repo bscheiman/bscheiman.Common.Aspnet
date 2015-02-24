@@ -15,12 +15,28 @@ namespace bscheiman.Common.Aspnet.Controllers {
     public class BaseLoggingController<TDatabase> : BaseLoggingController where TDatabase : DbContext, new() {
         protected TDatabase Database { get; set; }
 
-        public BaseLoggingController() {
-            Database = new TDatabase();
+        protected override void Dispose(bool disposing) {
+            base.Dispose(disposing);
+
+            Database.SaveChanges();
+            Database.Dispose();
         }
 
         protected TDatabase GetContext() {
             return Database;
+        }
+
+        protected override void OnActionExecuted(ActionExecutedContext filterContext) {
+            base.OnActionExecuted(filterContext);
+
+            Database.SaveChanges();
+            Database.Dispose();
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext ctx) {
+            base.OnActionExecuting(ctx);
+
+            Database = new TDatabase();
         }
     }
 

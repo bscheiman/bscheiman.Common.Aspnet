@@ -3,6 +3,7 @@ using System;
 using System.Data.Common;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Diagnostics;
+using bscheiman.Common.Util;
 
 #endregion
 
@@ -21,7 +22,7 @@ namespace bscheiman.Common.Aspnet.Database {
         }
 
         private void CommandExecuting<T>(ExecutingMethod<T> executingMethod, DbCommand command,
-            DbCommandInterceptionContext<T> interceptionContext) {
+                                         DbCommandInterceptionContext<T> interceptionContext) {
             var sw = Stopwatch.StartNew();
             executingMethod.Invoke(command, interceptionContext);
             sw.Stop();
@@ -30,11 +31,9 @@ namespace bscheiman.Common.Aspnet.Database {
                 Trace.WriteLine("ERROR: " + interceptionContext.Exception,
                     String.Format("Error executing command: {0}", command.CommandText));
             } else
-                Trace.WriteLine(string.Format("[{1}] {0}", command.CommandText, sw.Elapsed));
+                Log.Debug(string.Format("[{1}] {0}", command.CommandText, sw.Elapsed));
         }
 
-        #region Nested type: ExecutingMethod
         private delegate void ExecutingMethod<T>(DbCommand command, DbCommandInterceptionContext<T> interceptionContext);
-        #endregion
     }
 }

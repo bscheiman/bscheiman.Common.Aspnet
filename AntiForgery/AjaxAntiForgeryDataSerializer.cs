@@ -13,11 +13,7 @@ namespace bscheiman.Common.Aspnet.AntiForgery {
         private IStateFormatter _formatter;
 
         protected internal IStateFormatter Formatter {
-            get {
-                if (_formatter == null)
-                    _formatter = FormatterGenerator.GetFormatter();
-                return _formatter;
-            }
+            get { return _formatter ?? (_formatter = FormatterGenerator.GetFormatter()); }
             set { _formatter = value; }
         }
 
@@ -44,12 +40,12 @@ namespace bscheiman.Common.Aspnet.AntiForgery {
             if (token == null)
                 throw new ArgumentNullException("token");
 
-            object[] objToSerialize = {
-                token.Salt, token.Value, token.CreationDate, token.Username
-            };
-
-            string serializedValue = Formatter.Serialize(objToSerialize);
-            return serializedValue;
+            return Formatter.Serialize(new {
+                token.Salt,
+                token.Value,
+                token.CreationDate,
+                token.Username
+            });
         }
 
         private static HttpAntiForgeryException CreateValidationException(Exception innerException) {
@@ -69,10 +65,6 @@ namespace bscheiman.Common.Aspnet.AntiForgery {
                 }
 
                 public static Func<IStateFormatter> CreateFormatterGenerator() {
-                    // This code instantiates a page and tricks it into thinking that it's servicing
-                    // a postback scenario with encrypted ViewState, which is required to make the
-                    // StateFormatter properly decrypt data. Specifically, this code sets the
-                    // internal Page.ContainsEncryptedViewState flag.
                     var writer = TextWriter.Null;
                     var response = new HttpResponse(writer);
                     var request = new HttpRequest("DummyFile.aspx", HttpContext.Current.Request.Url.ToString(),
@@ -89,11 +81,9 @@ namespace bscheiman.Common.Aspnet.AntiForgery {
                 }
 
                 public override void Load() {
-                    throw new NotImplementedException();
                 }
 
                 public override void Save() {
-                    throw new NotImplementedException();
                 }
             }
         }

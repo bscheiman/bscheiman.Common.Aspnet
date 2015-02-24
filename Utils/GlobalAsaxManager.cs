@@ -8,11 +8,12 @@ using bscheiman.Common.Aspnet.Database;
 
 namespace bscheiman.Common.Aspnet.Utils {
     public static class GlobalAsaxManager {
-        public static void Config(HttpApplication app) {
+        public static void Config(HttpApplication app, bool addLogger = true) {
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
 
-            DbInterception.Add(new DbLogger());
+            if (addLogger)
+                DbInterception.Add(new DbLogger());
         }
     }
 }

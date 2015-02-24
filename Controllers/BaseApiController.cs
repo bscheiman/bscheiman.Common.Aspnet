@@ -26,5 +26,12 @@ namespace bscheiman.Common.Aspnet.Controllers {
         protected TDatabase GetContext() {
             return Database;
         }
+
+        protected override void Dispose(bool disposing) {
+            base.Dispose(disposing);
+            
+            Database.SaveChanges();
+            Database.Dispose();
+        }
     }
 }
