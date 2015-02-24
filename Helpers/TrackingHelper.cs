@@ -8,7 +8,7 @@ using bscheiman.Common.Util;
 
 #endregion
 
-namespace bscheiman.Common.Aspnet.Database {
+namespace bscheiman.Common.Aspnet.Helpers {
     internal static class TrackingHelper {
         internal static void TrackEntities(DbContext ctx) {
             var hasUsers =

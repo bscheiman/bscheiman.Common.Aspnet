@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Threading;
 using System.Threading.Tasks;
+using bscheiman.Common.Aspnet.Helpers;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 #endregion
