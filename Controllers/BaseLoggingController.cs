@@ -14,12 +14,18 @@ using Microsoft.Owin.Security;
 namespace bscheiman.Common.Aspnet.Controllers {
     public class BaseLoggingController<TDatabase> : BaseLoggingController where TDatabase : DbContext, new() {
         protected TDatabase Database { get; set; }
+        private bool DatabaseDisposed { get; set; }
 
         protected override void Dispose(bool disposing) {
             base.Dispose(disposing);
 
+            if (DatabaseDisposed)
+                return;
+
             Database.SaveChanges();
             Database.Dispose();
+
+            DatabaseDisposed = true;
         }
 
         protected TDatabase GetContext() {
@@ -29,8 +35,13 @@ namespace bscheiman.Common.Aspnet.Controllers {
         protected override void OnActionExecuted(ActionExecutedContext filterContext) {
             base.OnActionExecuted(filterContext);
 
+            if (DatabaseDisposed)
+                return;
+
             Database.SaveChanges();
             Database.Dispose();
+
+            DatabaseDisposed = true;
         }
 
         protected override void OnActionExecuting(ActionExecutingContext ctx) {
