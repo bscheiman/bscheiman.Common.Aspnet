@@ -19,13 +19,7 @@ namespace bscheiman.Common.Aspnet.Controllers {
         protected override void Dispose(bool disposing) {
             base.Dispose(disposing);
 
-            if (DatabaseDisposed)
-                return;
-
-            Database.SaveChanges();
-            Database.Dispose();
-
-            DatabaseDisposed = true;
+            Cleanup();
         }
 
         protected TDatabase GetContext() {
@@ -35,6 +29,16 @@ namespace bscheiman.Common.Aspnet.Controllers {
         protected override void OnActionExecuted(ActionExecutedContext filterContext) {
             base.OnActionExecuted(filterContext);
 
+            Cleanup();
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext ctx) {
+            base.OnActionExecuting(ctx);
+
+            Database = new TDatabase();
+        }
+
+        private void Cleanup() {
             if (DatabaseDisposed)
                 return;
 
@@ -42,12 +46,6 @@ namespace bscheiman.Common.Aspnet.Controllers {
             Database.Dispose();
 
             DatabaseDisposed = true;
-        }
-
-        protected override void OnActionExecuting(ActionExecutingContext ctx) {
-            base.OnActionExecuting(ctx);
-
-            Database = new TDatabase();
         }
     }
 
