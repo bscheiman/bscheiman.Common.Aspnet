@@ -35,7 +35,7 @@ namespace bscheiman.Common.Aspnet.Controllers {
         }
 
         private void Cleanup() {
-            if (DatabaseDisposed)
+            if (DatabaseDisposed || Database == null)
                 return;
 
             Database.SaveChanges();
