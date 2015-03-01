@@ -40,16 +40,13 @@ namespace bscheiman.Common.Aspnet.AntiForgery {
             if (token == null)
                 throw new ArgumentNullException("token");
 
-            return Formatter.Serialize(new {
-                token.Salt,
-                token.Value,
-                token.CreationDate,
-                token.Username
+            return Formatter.Serialize(new object[] {
+                token.Salt, token.Value, token.CreationDate, token.Username
             });
         }
 
         private static HttpAntiForgeryException CreateValidationException(Exception innerException) {
-            return new HttpAntiForgeryException("Antiforgerytoken missing or validation failed.", innerException);
+            return new HttpAntiForgeryException("AjaxAntiForgery missing or validation failed.", innerException);
         }
 
         private static class FormatterGenerator {
