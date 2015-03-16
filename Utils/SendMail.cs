@@ -96,9 +96,7 @@ namespace bscheiman.Common.Aspnet.Utils {
             if (string.IsNullOrEmpty(fullPath) || !File.Exists(fullPath))
                 return false;
 
-            string template = File.ReadAllText(fullPath);
-            string emailHtmlBody = Engine.Razor.RunCompile(template, template.ToMD5(), null, model);
-            var final = MarkdownHelper.Transform(emailHtmlBody, Css, true);
+            var final = MarkdownHelper.Transform(RazorHelper.Transform(fullPath, model), Css, true);
 
             return await To(address, subject, final, "", from, fromName);
         }
@@ -107,7 +105,8 @@ namespace bscheiman.Common.Aspnet.Utils {
                                     IEnumerable<HttpPostedFileBase> files = null) {
             var message = new MailMessage(new MailAddress(from, fromName), new MailAddress(address)) {
                 Subject = subject,
-                Body = html
+                Body = html,
+                IsBodyHtml = true
             };
 
             message.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(plainText, new ContentType("text/plain")));

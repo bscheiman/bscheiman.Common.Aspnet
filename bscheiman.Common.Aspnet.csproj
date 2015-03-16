@@ -165,6 +165,7 @@
     <Compile Include="Database\TrackingDbContext.cs" />
     <Compile Include="Filters\PopulateViewModelFilter.cs" />
     <Compile Include="Helpers\MarkdownHelper.cs" />
+    <Compile Include="Helpers\RazorHelper.cs" />
     <Compile Include="Helpers\TrackingHelper.cs" />
     <Compile Include="Extensions\ActionExecutingContextExtensions.cs" />
     <Compile Include="Extensions\HttpControllerContextExtensions.cs" />

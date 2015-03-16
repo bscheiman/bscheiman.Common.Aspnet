@@ -15,8 +15,8 @@ namespace bscheiman.Common.Aspnet.Utils {
     public static class GlobalAsaxManager {
         public static void Config(HttpApplication app, bool addLogger = true) {
             System.Web.Mvc.ViewEngines.Engines.Clear();
-            System.Web.Mvc.ViewEngines.Engines.Add(new RazorViewEngine());
             System.Web.Mvc.ViewEngines.Engines.Add(new MarkdownViewEngine());
+            System.Web.Mvc.ViewEngines.Engines.Add(new RazorViewEngine());
 
             if (addLogger)
                 DbInterception.Add(new DbLogger());
