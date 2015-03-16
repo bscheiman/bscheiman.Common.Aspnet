@@ -11,9 +11,6 @@ using System.Web.Hosting;
 using bscheiman.Common.Aspnet.Helpers;
 using bscheiman.Common.Extensions;
 using bscheiman.Common.Util;
-using MarkdownSharp;
-using RazorEngine;
-using RazorEngine.Templating;
 using RestSharp;
 
 #endregion
@@ -96,7 +93,7 @@ namespace bscheiman.Common.Aspnet.Utils {
             if (string.IsNullOrEmpty(fullPath) || !File.Exists(fullPath))
                 return false;
 
-            var final = MarkdownHelper.Transform(RazorHelper.Transform(fullPath, model), Css, true);
+            string final = MarkdownHelper.Transform(RazorHelper.Transform(fullPath, model), Css, true);
 
             return await To(address, subject, final, "", from, fromName);
         }
