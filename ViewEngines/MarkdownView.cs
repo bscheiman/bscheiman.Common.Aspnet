@@ -1,7 +1,9 @@
 ﻿#region
 using System.IO;
 using System.Web.Mvc;
-using MarkdownSharp;
+using bscheiman.Common.Aspnet.Helpers;
+using bscheiman.Common.Extensions;
+using RazorEngine;
 using RazorEngine.Templating;
 
 #endregion
@@ -20,16 +22,10 @@ namespace bscheiman.Common.Aspnet.ViewEngines {
             if (!File.Exists(FullPath))
                 writer.WriteLine("View not found");
 
-            string emailHtmlBody = new TemplateService().Parse(File.ReadAllText(FullPath), viewContext.ViewData.Model, null, null);
-            string html = new Markdown(new MarkdownOptions {
-                AutoHyperlink = true,
-                EncodeProblemUrlCharacters = true,
-                LinkEmails = true
-            }).Transform(emailHtmlBody);
+            string template = File.ReadAllText(FullPath);
+            string htmlBody = Engine.Razor.RunCompile(template, template.ToMD5(), null, viewContext.ViewData.Model);
 
-            writer.WriteLine(Inline
-                ? PreMailer.Net.PreMailer.MoveCssInline(html, true, css: Css).Html
-                : string.Format("<style>{0}</style>{1}", Css, html));
+            writer.WriteLine(MarkdownHelper.Transform(htmlBody, Css, Inline));
         }
     }
 }

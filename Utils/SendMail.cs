@@ -7,9 +7,13 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Hosting;
+using bscheiman.Common.Aspnet.Helpers;
 using bscheiman.Common.Extensions;
 using bscheiman.Common.Util;
-using Postal;
+using MarkdownSharp;
+using RazorEngine;
+using RazorEngine.Templating;
 using RestSharp;
 
 #endregion
@@ -17,17 +21,25 @@ using RestSharp;
 namespace bscheiman.Common.Aspnet.Utils {
     public static class SendMail {
         private static string Account { get; set; }
+        public static string Css { get; set; }
         private static string Domain { get; set; }
+        public static bool Initialized { get; set; }
         private static string Password { get; set; }
 
         public static void Init(string account, string password, string domain) {
+            account.ThrowIfNullOrEmpty("account");
+            password.ThrowIfNullOrEmpty("password");
+            domain.ThrowIfNullOrEmpty("domain");
+
             Account = account;
             Password = password;
             Domain = domain;
+
+            Initialized = true;
         }
 
         public static async Task<bool> To(MailMessage message) {
-            if (Account.IsNullOrEmpty() || Password.IsNullOrEmpty() || Domain.IsNullOrEmpty()) {
+            if (!Initialized) {
                 Log.Fatal("Can't send mail - invalid config");
 
                 return false;
@@ -72,12 +84,23 @@ namespace bscheiman.Common.Aspnet.Utils {
             }
         }
 
-        public static Task<bool> To<TMail>(string address, string viewName, TMail model) where TMail : Email {
-            model.ViewName = viewName;
-            var msg = new EmailService().CreateMailMessage(model);
-            msg.To.Add(new MailAddress(address));
+        public static async Task<bool> To(string address, string from, string fromName, string subject, string viewName, object model) {
+            if (!viewName.StartsWith("~"))
+                viewName = "~/Views/Emails/" + viewName;
 
-            return To(msg);
+            if (!viewName.EndsWith(".md"))
+                viewName += ".md";
+
+            string fullPath = HostingEnvironment.MapPath(viewName);
+
+            if (string.IsNullOrEmpty(fullPath) || !File.Exists(fullPath))
+                return false;
+
+            string template = File.ReadAllText(fullPath);
+            string emailHtmlBody = Engine.Razor.RunCompile(template, template.ToMD5(), null, model);
+            var final = MarkdownHelper.Transform(emailHtmlBody, Css, true);
+
+            return await To(address, subject, final, "", from, fromName);
         }
 
         public static Task<bool> To(string address, string subject, string html, string plainText, string from, string fromName,
