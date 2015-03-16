@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bscheiman.Common.Aspnet", "bscheiman.Common.Aspnet.csproj", "{2408ECB3-5270-4F8D-8C4E-ED36CBB05A3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bscheiman.Common.Aspnet.Test", "bscheiman.Common.Aspnet.Test\bscheiman.Common.Aspnet.Test.csproj", "{9AFAF19D-7293-4370-A858-795EBF95589A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{2408ECB3-5270-4F8D-8C4E-ED36CBB05A3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2408ECB3-5270-4F8D-8C4E-ED36CBB05A3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2408ECB3-5270-4F8D-8C4E-ED36CBB05A3D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9AFAF19D-7293-4370-A858-795EBF95589A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9AFAF19D-7293-4370-A858-795EBF95589A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9AFAF19D-7293-4370-A858-795EBF95589A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9AFAF19D-7293-4370-A858-795EBF95589A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
