@@ -23,4 +23,5 @@ XXX
 2. Application_Start / Global.asax.cs
 - Call: GlobalAsaxManager.Config<YourContext>(this, true, builder => { });
 
-3. 
+3. Add markdown.css & markdown-email.css to project root, build action => Content
+These files are used for styling Markdown controllers & e-mail templates, respectively

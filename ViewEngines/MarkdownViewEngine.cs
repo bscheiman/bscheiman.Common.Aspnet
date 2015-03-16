@@ -1,8 +1,8 @@
 ﻿#region
 using System.IO;
 using System.Linq;
-using System.Web.Hosting;
 using System.Web.Mvc;
+using bscheiman.Common.Aspnet.Helpers;
 
 #endregion
 
@@ -21,7 +21,7 @@ namespace bscheiman.Common.Aspnet.ViewEngines {
             var result = new ViewEngineResult(ViewSearchPaths.Select(v => string.Format(v, ctrl, viewName)));
 
             foreach (string path in ViewSearchPaths) {
-                string fullPath = HostingEnvironment.MapPath(string.Format(path, ctrl, viewName));
+                string fullPath = PathHelper.MapRelative(string.Format(path, ctrl, viewName));
 
                 if (File.Exists(fullPath))
                     result = new ViewEngineResult(new MarkdownView(fullPath), this);

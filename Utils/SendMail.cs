@@ -7,7 +7,6 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Hosting;
 using bscheiman.Common.Aspnet.Helpers;
 using bscheiman.Common.Extensions;
 using bscheiman.Common.Util;
@@ -18,7 +17,6 @@ using RestSharp;
 namespace bscheiman.Common.Aspnet.Utils {
     public static class SendMail {
         private static string Account { get; set; }
-        public static string Css { get; set; }
         private static string Domain { get; set; }
         public static bool Initialized { get; set; }
         private static string Password { get; set; }
@@ -88,12 +86,8 @@ namespace bscheiman.Common.Aspnet.Utils {
             if (!viewName.EndsWith(".md"))
                 viewName += ".md";
 
-            string fullPath = HostingEnvironment.MapPath(viewName);
-
-            if (string.IsNullOrEmpty(fullPath) || !File.Exists(fullPath))
-                return false;
-
-            string final = MarkdownHelper.Transform(RazorHelper.Transform(fullPath, model), Css, true);
+            string final = MarkdownHelper.Transform(RazorHelper.Transform(PathHelper.MapRelative(viewName), model),
+                PathHelper.ReadAsString("~/markdown-email.css"), true);
 
             return await To(address, subject, final, "", from, fromName);
         }

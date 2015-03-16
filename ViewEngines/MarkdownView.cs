@@ -7,7 +7,6 @@ using bscheiman.Common.Aspnet.Helpers;
 
 namespace bscheiman.Common.Aspnet.ViewEngines {
     public class MarkdownView : IView {
-        public static string Css { get; set; }
         public string FullPath { get; set; }
         public static bool Inline { get; set; }
 
@@ -19,7 +18,8 @@ namespace bscheiman.Common.Aspnet.ViewEngines {
             if (!File.Exists(FullPath))
                 writer.WriteLine("View not found");
 
-            writer.WriteLine(MarkdownHelper.Transform(RazorHelper.Transform(FullPath, viewContext.ViewData.Model), Css, Inline));
+            writer.WriteLine(MarkdownHelper.Transform(RazorHelper.Transform(FullPath, viewContext.ViewData.Model),
+                PathHelper.ReadAsString("~/markdown.css"), Inline));
         }
     }
 }
