@@ -13,5 +13,6 @@
    
    <files>
 	   <file src="bin\Release\bscheiman.Common.Aspnet.dll" target="lib\net40\bscheiman.Common.Aspnet.dll" />
+	   <file src="readme.txt" target="" />
    </files>
 </package>

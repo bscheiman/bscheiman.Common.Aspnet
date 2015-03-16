@@ -16,26 +16,20 @@ namespace bscheiman.Common.Aspnet.Controllers {
         protected TDatabase Database { get; set; }
         private bool DatabaseDisposed { get; set; }
 
+        public BaseLoggingController(TDatabase database) {
+            Database = database;
+        }
+
         protected override void Dispose(bool disposing) {
             base.Dispose(disposing);
 
             Cleanup();
         }
 
-        protected TDatabase GetContext() {
-            return Database;
-        }
-
         protected override void OnActionExecuted(ActionExecutedContext filterContext) {
             base.OnActionExecuted(filterContext);
 
             Cleanup();
-        }
-
-        protected override void OnActionExecuting(ActionExecutingContext ctx) {
-            base.OnActionExecuting(ctx);
-
-            Database = new TDatabase();
         }
 
         private void Cleanup() {

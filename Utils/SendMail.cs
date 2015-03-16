@@ -1,9 +1,15 @@
 ﻿#region
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Mail;
+using System.Net.Mime;
+using System.Threading.Tasks;
 using System.Web;
 using bscheiman.Common.Extensions;
 using bscheiman.Common.Util;
+using Postal;
 using RestSharp;
 
 #endregion
@@ -20,8 +26,7 @@ namespace bscheiman.Common.Aspnet.Utils {
             Domain = domain;
         }
 
-        public static bool To(string address, string subject, string html, string plaintext, string from, string fromName,
-            IEnumerable<HttpPostedFileBase> files = null) {
+        public static async Task<bool> To(MailMessage message) {
             if (Account.IsNullOrEmpty() || Password.IsNullOrEmpty() || Domain.IsNullOrEmpty()) {
                 Log.Fatal("Can't send mail - invalid config");
 
@@ -36,20 +41,24 @@ namespace bscheiman.Common.Aspnet.Utils {
                 var request = new RestRequest();
                 request.AddParameter("domain", Domain, ParameterType.UrlSegment);
                 request.Resource = "{domain}/messages";
-                request.AddParameter("from", string.Format("{0} <{1}>", fromName, from));
-                request.AddParameter("to", address);
-                request.AddParameter("subject", subject);
-                request.AddParameter("html", html);
-                request.AddParameter("text", plaintext);
+                request.AddParameter("from", string.Format("{0} <{1}>", message.From.DisplayName, message.From.Address));
 
-                if (files != null) {
-                    foreach (var f in files) {
-                        var b = new byte[f.InputStream.Length];
+                foreach (var to in message.To)
+                    request.AddParameter("to", to.Address);
 
-                        f.InputStream.Position = 0;
-                        f.InputStream.Read(b, 0, b.Length);
+                request.AddParameter("subject", message.Subject);
+                request.AddParameter("html", message.Body);
 
-                        request.AddFile("attachment", b, f.FileName);
+                var plainText = message.AlternateViews.FirstOrDefault(c => c.ContentType.MediaType == "text/plain");
+
+                if (plainText != null)
+                    request.AddParameter("text", plainText);
+
+                foreach (var attachment in message.Attachments) {
+                    using (var ms = new MemoryStream()) {
+                        await attachment.ContentStream.CopyToAsync(ms);
+
+                        request.AddFile("attachment", ms.ToArray(), attachment.Name);
                     }
                 }
 
@@ -61,6 +70,31 @@ namespace bscheiman.Common.Aspnet.Utils {
 
                 return false;
             }
+        }
+
+        public static Task<bool> To<TMail>(string address, string viewName, TMail model) where TMail : Email {
+            model.ViewName = viewName;
+            var msg = new EmailService().CreateMailMessage(model);
+            msg.To.Add(new MailAddress(address));
+
+            return To(msg);
+        }
+
+        public static Task<bool> To(string address, string subject, string html, string plainText, string from, string fromName,
+                                    IEnumerable<HttpPostedFileBase> files = null) {
+            var message = new MailMessage(new MailAddress(from, fromName), new MailAddress(address)) {
+                Subject = subject,
+                Body = html
+            };
+
+            message.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(plainText, new ContentType("text/plain")));
+
+            if (files != null) {
+                foreach (var file in files.ToArray())
+                    message.Attachments.Add(new Attachment(file.InputStream, file.FileName));
+            }
+
+            return To(message);
         }
     }
 }

@@ -19,10 +19,10 @@ namespace bscheiman.Common.Aspnet.Database {
         [ScaffoldColumn(false)]
         public DateTime DateModified { get; set; }
 
-        [ScaffoldColumn(false)]
+        [MaxLength(256), ScaffoldColumn(false)]
         public string UserCreated { get; set; }
 
-        [ScaffoldColumn(false)]
+        [MaxLength(256), ScaffoldColumn(false)]
         public string UserModified { get; set; }
 
         [ScaffoldColumn(false)]

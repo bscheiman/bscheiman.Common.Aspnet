@@ -46,3 +46,5 @@ bin
 obj
 packages
 *.suo
+
+bscheiman.Common.Aspnet.Test

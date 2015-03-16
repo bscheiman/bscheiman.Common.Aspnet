@@ -43,6 +43,11 @@ namespace bscheiman.Common.Aspnet.Database {
         }
     }
 
+    public class TrackingDbContext : TrackingDbContext<IdentityUser> {
+        public TrackingDbContext(string ctx) : base(ctx) {
+        }
+    }
+
     public class TrackingDbContext<TUser> : IdentityDbContext<TUser> where TUser : IdentityUser {
         public TrackingDbContext(string ctx) : base(ctx) {
         }
