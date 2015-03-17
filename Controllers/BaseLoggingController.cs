@@ -21,9 +21,7 @@ namespace bscheiman.Common.Aspnet.Controllers {
     }
 
     public class BaseLoggingController : Controller {
-        public IAuthenticationManager Authentication {
-            get { return CurrentOwinContext.Authentication; }
-        }
+        public IAuthenticationManager Authentication { get; set; }
 
         public IOwinContext CurrentOwinContext {
             get { return HttpContext.GetOwinContext(); }
