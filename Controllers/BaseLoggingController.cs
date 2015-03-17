@@ -14,32 +14,9 @@ using Microsoft.Owin.Security;
 namespace bscheiman.Common.Aspnet.Controllers {
     public class BaseLoggingController<TDatabase> : BaseLoggingController where TDatabase : DbContext, new() {
         protected TDatabase Database { get; set; }
-        private bool DatabaseDisposed { get; set; }
 
         public BaseLoggingController(TDatabase database) {
             Database = database;
-        }
-
-        protected override void Dispose(bool disposing) {
-            base.Dispose(disposing);
-
-            Cleanup();
-        }
-
-        protected override void OnActionExecuted(ActionExecutedContext filterContext) {
-            base.OnActionExecuted(filterContext);
-
-            Cleanup();
-        }
-
-        private void Cleanup() {
-            if (DatabaseDisposed || Database == null)
-                return;
-
-            Database.SaveChanges();
-            Database.Dispose();
-
-            DatabaseDisposed = true;
         }
     }
 

@@ -25,9 +25,6 @@ namespace bscheiman.Common.Aspnet.Extensions {
             if (date.Kind == DateTimeKind.Local)
                 date = date.ToUniversalTime();
 
-            Trace.WriteLine(date.ToString());
-            Trace.WriteLine(date.ToEpoch());
-
             return new HtmlString(string.Format(@"<time datetime=""{0}"" data-format=""{1}"">", date.ToEpoch(), format));
         }
 

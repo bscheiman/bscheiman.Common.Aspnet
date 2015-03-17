@@ -1,12 +1,12 @@
 ﻿#region
 using System;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Web;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using bscheiman.Common.Aspnet.Database;
-using bscheiman.Common.Aspnet.Modules;
 using bscheiman.Common.Aspnet.ViewEngines;
 
 #endregion
@@ -22,13 +22,14 @@ namespace bscheiman.Common.Aspnet.Utils {
                 DbInterception.Add(new DbLogger());
         }
 
-        public static void Config<TContext>(HttpApplication app, bool addLogger = true, Action<ContainerBuilder> builderFunc = null) {
+        public static void Config<TContext, TController>(HttpApplication app, bool addLogger = true,
+                                                         Action<ContainerBuilder> builderFunc = null) where TContext : DbContext
+            where TController : Controller {
             Config(app, addLogger);
 
             var builder = new ContainerBuilder();
-            builder.RegisterControllers(typeof (TContext).Assembly).PropertiesAutowired();
-            builder.RegisterModule(new ServiceModule());
-            builder.RegisterModule(new EFModule<TContext>());
+            builder.RegisterType(typeof (TContext)).AsSelf().AsImplementedInterfaces().As<DbContext>().InstancePerRequest();
+            builder.RegisterControllers(typeof (TController).Assembly).PropertiesAutowired();
 
             if (builderFunc != null)
                 builderFunc(builder);

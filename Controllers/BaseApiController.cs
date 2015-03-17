@@ -12,36 +12,15 @@ using bscheiman.Common.Aspnet.Extensions;
 namespace bscheiman.Common.Aspnet.Controllers {
     public class ApiLoggingController<TDatabase> : ApiController where TDatabase : DbContext, new() {
         protected TDatabase Database { get; set; }
-        private bool DatabaseDisposed { get; set; }
 
-        public ApiLoggingController() {
-            Database = new TDatabase();
+        public ApiLoggingController(TDatabase database) {
+            Database = database;
         }
 
         public override Task<HttpResponseMessage> ExecuteAsync(HttpControllerContext ctx, CancellationToken cancellationToken) {
             ctx.Log();
 
             return base.ExecuteAsync(ctx, cancellationToken);
-        }
-
-        protected override void Dispose(bool disposing) {
-            base.Dispose(disposing);
-
-            Cleanup();
-        }
-
-        protected TDatabase GetContext() {
-            return Database;
-        }
-
-        private void Cleanup() {
-            if (DatabaseDisposed || Database == null)
-                return;
-
-            Database.SaveChanges();
-            Database.Dispose();
-
-            DatabaseDisposed = true;
         }
     }
 }
