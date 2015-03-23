@@ -13,12 +13,12 @@ namespace bscheiman.Common.Aspnet.ViewEngines {
         };
 
         public ViewEngineResult FindPartialView(ControllerContext controllerContext, string partialViewName, bool useCache) {
-            return null;
+            return FindView(controllerContext, partialViewName, "", useCache);
         }
 
         public ViewEngineResult FindView(ControllerContext controllerContext, string viewName, string masterName, bool useCache) {
             var ctrl = controllerContext.RouteData.Values["controller"];
-            var result = new ViewEngineResult(ViewSearchPaths.Select(v => string.Format(v, ctrl, viewName)));
+            var result = new ViewEngineResult(Enumerable.Empty<string>());
 
             foreach (string path in ViewSearchPaths) {
                 string fullPath = PathHelper.MapRelative(string.Format(path, ctrl, viewName));

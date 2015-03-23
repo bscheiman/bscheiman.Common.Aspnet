@@ -22,13 +22,23 @@ namespace bscheiman.Common.Aspnet.Utils {
                 DbInterception.Add(new DbLogger());
         }
 
-        public static void Config<TContext, TController>(HttpApplication app, bool addLogger = true,
+        public static void Config<TContext, TController>(HttpApplication app, bool addLogger = true, bool autoSave = true,
                                                          Action<ContainerBuilder> builderFunc = null) where TContext : DbContext
             where TController : Controller {
             Config(app, addLogger);
 
             var builder = new ContainerBuilder();
-            builder.RegisterType(typeof (TContext)).AsSelf().AsImplementedInterfaces().As<DbContext>().InstancePerRequest();
+
+            if (autoSave) {
+                builder.RegisterType(typeof (TContext))
+                       .AsSelf()
+                       .AsImplementedInterfaces()
+                       .As<DbContext>()
+                       .InstancePerRequest()
+                       .OnRelease(x => ((TContext) x).SaveChanges());
+            } else
+                builder.RegisterType(typeof (TContext)).AsSelf().AsImplementedInterfaces().As<DbContext>().InstancePerRequest();
+
             builder.RegisterControllers(typeof (TController).Assembly).PropertiesAutowired();
 
             if (builderFunc != null)
