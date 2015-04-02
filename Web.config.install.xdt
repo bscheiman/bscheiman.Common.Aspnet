@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0"?>
 <configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
   <system.webServer>
-    <staticContent xdt:Transform="Insert">
+    <staticContent xdt:Transform="Remove" />
+    <staticContent xdt:Transform="InsertIfMissing">
       <remove fileExtension=".svg" xdt:Transform="Insert" />
       <remove fileExtension=".eot" xdt:Transform="Insert" />
       <remove fileExtension=".woff" xdt:Transform="Insert" />
@@ -10,6 +11,7 @@
       <mimeMap fileExtension=".woff" mimeType="application/x-woff" xdt:Transform="Insert" />
     </staticContent>
     
+    <httpCompression xdt:Transform="Remove"/>
     <httpCompression directory="%SystemDrive%\inetpub\temp\IIS Temporary Compressed Files" xdt:Transform="Insert">
       <scheme name="gzip" dll="%Windir%\system32\inetsrv\gzip.dll" xdt:Transform="Insert" />
       
@@ -31,6 +33,7 @@
         <add mimeType="*/*" enabled="false" xdt:Transform="Insert" />
       </staticTypes>
     </httpCompression>
+    <urlCompression xdt:Transform="Remove" />
     <urlCompression doStaticCompression="true" doDynamicCompression="true" xdt:Transform="Insert" />
   </system.webServer>
 </configuration>
