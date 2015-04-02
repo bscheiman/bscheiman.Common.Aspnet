@@ -3,9 +3,11 @@ using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Autofac.Integration.WebApi;
 using bscheiman.Common.Aspnet.Database;
 using bscheiman.Common.Aspnet.ViewEngines;
 
@@ -40,6 +42,7 @@ namespace bscheiman.Common.Aspnet.Utils {
                 builder.RegisterType(typeof (TContext)).AsSelf().AsImplementedInterfaces().As<DbContext>().InstancePerRequest();
 
             builder.RegisterControllers(typeof (TController).Assembly).PropertiesAutowired();
+            builder.RegisterApiControllers(typeof (TController).Assembly).PropertiesAutowired();
 
             if (builderFunc != null)
                 builderFunc(builder);
@@ -47,6 +50,7 @@ namespace bscheiman.Common.Aspnet.Utils {
             var container = builder.Build();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }
     }
 }
