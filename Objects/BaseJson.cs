@@ -14,4 +14,16 @@ namespace bscheiman.Common.Aspnet.Objects {
         [JsonProperty("valid")]
         public bool Valid { get; set; }
     }
+
+    public class BaseJson<T> : BaseJson {
+        [JsonProperty("value")]
+        public T Value { get; set; }
+
+        public BaseJson() {
+        }
+
+        public BaseJson(T value) {
+            Value = value;
+        }
+    }
 }
