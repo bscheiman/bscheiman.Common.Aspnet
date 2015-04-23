@@ -10,24 +10,27 @@ using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using bscheiman.Common.Aspnet.Database;
 using bscheiman.Common.Aspnet.ViewEngines;
+using Microsoft.Owin.Security.DataProtection;
+using Owin;
+using MvcViewEngines = System.Web.Mvc.ViewEngines;
 
 #endregion
 
 namespace bscheiman.Common.Aspnet.Utils {
-    public static class GlobalAsaxManager {
-        public static void Config(HttpApplication app, bool addLogger = true) {
-            System.Web.Mvc.ViewEngines.Engines.Clear();
-            System.Web.Mvc.ViewEngines.Engines.Add(new MarkdownViewEngine());
-            System.Web.Mvc.ViewEngines.Engines.Add(new RazorViewEngine());
+    public static class StartupManager {
+        public static void Config(bool addLogger = true) {
+            MvcViewEngines.Engines.Clear();
+            MvcViewEngines.Engines.Add(new MarkdownViewEngine());
+            MvcViewEngines.Engines.Add(new RazorViewEngine());
 
             if (addLogger)
                 DbInterception.Add(new DbLogger());
         }
 
-        public static void Config<TContext, TController>(HttpApplication app, bool addLogger = true, bool autoSave = true,
+        public static void Config<TContext, TController>(IAppBuilder app, bool addLogger = true, bool autoSave = true,
                                                          Action<ContainerBuilder> builderFunc = null) where TContext : DbContext
             where TController : Controller {
-            Config(app, addLogger);
+            Config(addLogger);
 
             var builder = new ContainerBuilder();
 
@@ -41,16 +44,45 @@ namespace bscheiman.Common.Aspnet.Utils {
             } else
                 builder.RegisterType(typeof (TContext)).AsSelf().AsImplementedInterfaces().As<DbContext>().InstancePerRequest();
 
+            // OWIN PIPELINE
+            builder.Register(c => HttpContext.Current.GetOwinContext().Authentication).InstancePerRequest();
+            builder.Register(c => app.GetDataProtectionProvider()).InstancePerRequest();
+
+            // REGISTER CONTROLLERS
             builder.RegisterControllers(typeof (TController).Assembly).PropertiesAutowired();
             builder.RegisterApiControllers(typeof (TController).Assembly).PropertiesAutowired();
 
+            // EXTRA SETUP
             if (builderFunc != null)
                 builderFunc(builder);
 
+            // BUILD THE CONTAINER
             var container = builder.Build();
+
+            // REGISTER WITH OWIN
+            app.UseAutofacMiddleware(container);
+            app.UseAutofacMvc();
+
+            // REPLACE THE MVC DEPENDENCY RESOLVER WITH AUTOFAC
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
+            /*// -----------
+            var builder = new ContainerBuilder();
+
+            // REGISTER DEPENDENCIES
+
+            //
+
+
+            // REGISTER CONTROLLERS SO DEPENDENCIES ARE CONSTRUCTOR INJECTED
+            builder.RegisterControllers(typeof (BaseController).Assembly);
+            builder.RegisterApiControllers(typeof (BaseController).Assembly);
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
+            */
         }
     }
 }

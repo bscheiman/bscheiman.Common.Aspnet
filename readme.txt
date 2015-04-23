@@ -24,8 +24,8 @@ If you're using ASP.NET Identity + OWIN, there are a few things you have to take
 - If you have a custom user, you can use TrackingDbContext<YourUser>
 - If the main key isn't a string, use the whole enchilada: TrackingDbContext<TUser, TRole, TKey, TUserLogin, TUserRole, TUserClaim>
 
-2. Application_Start / Global.asax.cs
-- Call: GlobalAsaxManager.Config<YourContext, AnyController>(this, true, builder => { });
+2. Startup.cs / Startup.Auth.cs
+- Call: GlobalStartupManager.Config<YourContext, AnyController>(this, true, builder => { });
 
 3. Add markdown.css & markdown-email.css to project root, build action => Content
 These files are used for styling Markdown controllers & e-mail templates, respectively.
