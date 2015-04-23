@@ -66,23 +66,6 @@ namespace bscheiman.Common.Aspnet.Utils {
             // REPLACE THE MVC DEPENDENCY RESOLVER WITH AUTOFAC
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-
-            /*// -----------
-            var builder = new ContainerBuilder();
-
-            // REGISTER DEPENDENCIES
-
-            //
-
-
-            // REGISTER CONTROLLERS SO DEPENDENCIES ARE CONSTRUCTOR INJECTED
-            builder.RegisterControllers(typeof (BaseController).Assembly);
-            builder.RegisterApiControllers(typeof (BaseController).Assembly);
-
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-
-            */
         }
     }
 }
