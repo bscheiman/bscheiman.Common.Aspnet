@@ -45,8 +45,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\bscheiman.Common.1.0.53\lib\portable-net45+win+wp80\bscheiman.Common.dll</HintPath>
     </Reference>
-    <Reference Include="crypto">
-      <HintPath>packages\Portable.BouncyCastle.1.7.0.1\lib\portable-net4+sl5+wp8+win8+wpa81\crypto.dll</HintPath>
+    <Reference Include="crypto, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Portable.BouncyCastle.1.7.0.2\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch10+MonoAndroid10+xamarinmac20+xamarinios10\crypto.dll</HintPath>
     </Reference>
     <Reference Include="CsQuery">
       <HintPath>packages\CsQuery.1.3.4\lib\net40\CsQuery.dll</HintPath>
@@ -62,13 +63,16 @@
     <Reference Include="MarkdownSharp">
       <HintPath>packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
     </Reference>
+    <Reference Include="MemoryCache">
+      <HintPath>packages\MemoryCache.1.2.0\lib\MemoryCache.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Microsoft.AspNet.Identity.Core.2.2.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <HintPath>packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Microsoft.AspNet.Identity.EntityFramework.2.2.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <HintPath>packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -163,6 +167,7 @@
     <Compile Include="AntiForgery\AjaxValidateAntiForgeryTokenAttribute.cs" />
     <Compile Include="AntiForgery\AjaxAntiForgeryHtmlExtensions.cs" />
     <Compile Include="Binder\JsonNetModelBinder.cs" />
+    <Compile Include="CommonApp.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseLoggingController.cs" />
     <Compile Include="Database\BaseEntity.cs" />
@@ -182,9 +187,7 @@
     <Compile Include="Filters\StopwatchFilterAttribute.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\HttpRequestHeadersExtensions.cs" />
-    <Compile Include="Interfaces\ICacheObject.cs" />
     <Compile Include="Objects\BaseJson.cs" />
-    <Compile Include="Utils\CacheUtil.cs" />
     <Compile Include="Utils\GlobalAsaxManager.cs" />
     <Compile Include="Interfaces\IHasApiKeys.cs" />
     <Compile Include="Interfaces\IHasDates.cs" />
