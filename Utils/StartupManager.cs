@@ -28,29 +28,38 @@ namespace bscheiman.Common.Aspnet.Utils {
         }
 
         public static void Config<TContext, TController>(IAppBuilder app, bool addLogger = true, bool autoSave = true,
-                                                         Action<ContainerBuilder> builderFunc = null) where TContext : DbContext
+                                                         Action<ContainerBuilder> builderFunc = null, bool log = false) where TContext : DbContext
             where TController : Controller {
             Config(addLogger);
 
             var builder = new ContainerBuilder();
 
+            // DB CONTEXT
             if (autoSave) {
                 builder.RegisterType(typeof (TContext))
                        .AsSelf()
                        .AsImplementedInterfaces()
                        .As<DbContext>()
                        .InstancePerRequest()
-                       .OnRelease(x => ((TContext) x).SaveChanges());
+                       .OnRelease(async x => await ((TContext) x).SaveChangesAsync());
             } else
                 builder.RegisterType(typeof (TContext)).AsSelf().AsImplementedInterfaces().As<DbContext>().InstancePerRequest();
 
-            // OWIN PIPELINE
+            // REGISTER DEPENDENCIES
             builder.Register(c => HttpContext.Current.GetOwinContext().Authentication).InstancePerRequest();
             builder.Register(c => app.GetDataProtectionProvider()).InstancePerRequest();
 
-            // REGISTER CONTROLLERS
-            builder.RegisterControllers(typeof (TController).Assembly).PropertiesAutowired();
-            builder.RegisterApiControllers(typeof (TController).Assembly).PropertiesAutowired();
+            // REGISTER CONTROLLERS SO DEPENDENCIES ARE CONSTRUCTOR INJECTED
+            builder.RegisterControllers(typeof (TController).Assembly);
+            builder.RegisterApiControllers(typeof (TController).Assembly);
+
+            // REGISTER FILTERS
+            builder.RegisterFilterProvider();
+            builder.RegisterWebApiFilterProvider(GlobalConfiguration.Configuration);
+
+            // ADD LOGGING
+            if (log)
+                builder.RegisterModule<LogRequestsModule>();
 
             // EXTRA SETUP
             if (builderFunc != null)
@@ -59,13 +68,13 @@ namespace bscheiman.Common.Aspnet.Utils {
             // BUILD THE CONTAINER
             var container = builder.Build();
 
-            // REGISTER WITH OWIN
-            app.UseAutofacMiddleware(container);
-            app.UseAutofacMvc();
-
             // REPLACE THE MVC DEPENDENCY RESOLVER WITH AUTOFAC
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
+            // REGISTER WITH OWIN
+            app.UseAutofacMiddleware(container);
+            app.UseAutofacMvc();
         }
     }
 }

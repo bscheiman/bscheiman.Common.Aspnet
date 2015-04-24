@@ -39,3 +39,10 @@ $("time").each(function() {
     t.html(m.format(t.attr("data-format")));
 });
 ---
+
+=========
+= NOTES =
+=========
+
+WebAPI Filters ARE SINGLETONS.
+More info @ http://docs.autofac.org/en/latest/integration/webapi.html#standard-web-api-filters-are-singletons
