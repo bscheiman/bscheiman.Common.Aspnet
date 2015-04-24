@@ -200,6 +200,7 @@
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\HttpRequestHeadersExtensions.cs" />
     <Compile Include="Objects\BaseJson.cs" />
+    <Compile Include="Utils\LogRequestsModule.cs" />
     <Compile Include="Utils\StartupManager.cs" />
     <Compile Include="Interfaces\IHasApiKeys.cs" />
     <Compile Include="Interfaces\IHasDates.cs" />
@@ -224,7 +225,7 @@
     <None Include="Web.config.install.xdt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="readme.txt" />
+    <Content Include="README.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
