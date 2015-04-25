@@ -213,6 +213,8 @@
     <Compile Include="ViewEngines\MarkdownView.cs" />
     <Compile Include="ViewEngines\MarkdownViewEngine.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="WebJobs\IJob.cs" />
+    <Compile Include="WebJobs\JobManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Embedded\time.js" />

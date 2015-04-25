@@ -41,7 +41,7 @@ namespace bscheiman.Common.Aspnet.Utils {
                        .AsImplementedInterfaces()
                        .As<DbContext>()
                        .InstancePerRequest()
-                       .OnRelease(async x => await ((TContext) x).SaveChangesAsync());
+                       .OnRelease(x => ((TContext) x).SaveChanges());
             } else
                 builder.RegisterType(typeof (TContext)).AsSelf().AsImplementedInterfaces().As<DbContext>().InstancePerRequest();
 
