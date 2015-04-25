@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace bscheiman.Common.Aspnet.WebJobs {
     public static class JobManager {
-        public static async void RunSteps<TJob>() {
+        public static async void RunSteps<TJob>() where TJob : IWebJob {
             var steps =
                 typeof (TJob).Assembly.GetTypes()
                              .Where(p => typeof (IWebJob).IsAssignableFrom(p) && !p.IsInterface)
