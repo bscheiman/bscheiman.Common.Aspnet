@@ -42,7 +42,7 @@ namespace bscheiman.Common.Aspnet.Utils {
 
             try {
                 var client = new RestClient {
-                    BaseUrl = new Uri("https://api.mailgun.net/v2"),
+                    BaseUrl = new Uri("https://api.mailgun.net/v3"),
                     Authenticator = new HttpBasicAuthenticator(Account, Password)
                 };
                 var request = new RestRequest();
