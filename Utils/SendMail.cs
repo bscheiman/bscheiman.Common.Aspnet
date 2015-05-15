@@ -58,8 +58,10 @@ namespace bscheiman.Common.Aspnet.Utils {
 
                 var plainText = message.AlternateViews.FirstOrDefault(c => c.ContentType.MediaType == "text/plain");
 
-                if (plainText != null)
-                    request.AddParameter("text", plainText);
+                if (plainText != null) {
+                    using (var reader = new StreamReader(plainText.ContentStream))
+                        request.AddParameter("text", reader.ReadToEnd());
+                }
 
                 foreach (var attachment in message.Attachments) {
                     using (var ms = new MemoryStream()) {
@@ -86,7 +88,7 @@ namespace bscheiman.Common.Aspnet.Utils {
             if (!viewName.EndsWith(".md"))
                 viewName += ".md";
 
-            string final = MarkdownHelper.Transform(RazorHelper.Transform(PathHelper.MapRelative(viewName), model),
+            var final = MarkdownHelper.Transform(RazorHelper.Transform(PathHelper.MapRelative(viewName), model),
                 PathHelper.ReadAsString("~/markdown-email.css"), true);
 
             return await To(address, subject, final, "", from, fromName);
