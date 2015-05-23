@@ -106,8 +106,8 @@
     <Reference Include="Owin">
       <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="PreMailer.Net, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\PreMailer.Net.1.4.0\lib\net40\PreMailer.Net.dll</HintPath>
+    <Reference Include="PreMailer.Net, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\PreMailer.Net.1.4.1\lib\net40\PreMailer.Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RazorEngine, Version=3.7.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
@@ -118,12 +118,12 @@
       <HintPath>packages\RestSharp.105.1.0\lib\net45\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sockets.Plugin, Version=1.1.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\rda.SocketsForPCL.1.1.8\lib\net45\Sockets.Plugin.dll</HintPath>
+    <Reference Include="Sockets.Plugin, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\rda.SocketsForPCL.1.2.0\lib\net45\Sockets.Plugin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sockets.Plugin.Abstractions, Version=1.1.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\rda.SocketsForPCL.1.1.8\lib\net45\Sockets.Plugin.Abstractions.dll</HintPath>
+    <Reference Include="Sockets.Plugin.Abstractions, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\rda.SocketsForPCL.1.2.0\lib\net45\Sockets.Plugin.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -180,7 +180,8 @@
     <Compile Include="AntiForgery\AjaxAntiForgeryDataSerializer.cs" />
     <Compile Include="AntiForgery\AjaxValidateAntiForgeryTokenAttribute.cs" />
     <Compile Include="AntiForgery\AjaxAntiForgeryHtmlExtensions.cs" />
-    <Compile Include="Binder\JsonNetModelBinder.cs" />
+    <Compile Include="Binders\NumberModalBinder.cs" />
+    <Compile Include="Binders\JsonNetModelBinder.cs" />
     <Compile Include="CommonApp.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseLoggingController.cs" />

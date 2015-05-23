@@ -5,7 +5,7 @@ using bscheiman.Common.Extensions;
 
 #endregion
 
-namespace bscheiman.Common.Aspnet.Binder {
+namespace bscheiman.Common.Aspnet.Binders {
     public class JsonNetModelBinder<T> : IModelBinder {
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext) {
             var request = controllerContext.HttpContext.Request;

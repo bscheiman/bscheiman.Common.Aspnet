@@ -1,4 +1,5 @@
 ﻿#region
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -27,17 +28,24 @@ namespace bscheiman.Common.Aspnet.Helpers {
                 currentUsername = "API";
 
             foreach (var entity in hasUsers) {
-                if (entity.State == EntityState.Added)
-                    ((IHasUsers) entity.Entity).UserCreated = currentUsername;
+                var userObject = (IHasUsers) entity.Entity;
 
-                ((IHasUsers) entity.Entity).UserModified = currentUsername;
+                if (entity.State == EntityState.Added)
+                    userObject.UserCreated = currentUsername;
+
+                userObject.UserModified = currentUsername;
             }
 
             foreach (var entity in hasDates) {
-                if (entity.State == EntityState.Added)
-                    ((IHasDates) entity.Entity).DateCreated = DateUtil.NowDt;
+                var dateObject = (IHasDates) entity.Entity;
 
-                ((IHasDates) entity.Entity).DateModified = DateUtil.NowDt;
+                if (entity.State == EntityState.Added)
+                    dateObject.DateCreated = DateUtil.NowDt;
+
+                dateObject.DateModified = DateUtil.NowDt;
+
+                if (dateObject.DateCreated == DateTime.MinValue)
+                    dateObject.DateCreated = DateUtil.NowDt;
             }
 
             foreach (var entity in deleted) {

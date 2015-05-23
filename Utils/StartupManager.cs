@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
+using bscheiman.Common.Aspnet.Binders;
 using bscheiman.Common.Aspnet.Database;
 using bscheiman.Common.Aspnet.ViewEngines;
 using Microsoft.Owin.Security.DataProtection;
@@ -22,6 +23,17 @@ namespace bscheiman.Common.Aspnet.Utils {
             MvcViewEngines.Engines.Clear();
             MvcViewEngines.Engines.Add(new MarkdownViewEngine());
             MvcViewEngines.Engines.Add(new RazorViewEngine());
+
+            ModelBinders.Binders.Add(typeof (decimal), new NumberModalBinder());
+            ModelBinders.Binders.Add(typeof (decimal?), new NumberModalBinder());
+            //ModelBinders.Binders.Add(typeof (float), new NumberModalBinder());
+            //ModelBinders.Binders.Add(typeof (float?), new NumberModalBinder());
+            //ModelBinders.Binders.Add(typeof (double), new NumberModalBinder());
+            //ModelBinders.Binders.Add(typeof (double?), new NumberModalBinder());
+            //ModelBinders.Binders.Add(typeof (int), new NumberModalBinder());
+            //ModelBinders.Binders.Add(typeof (int?), new NumberModalBinder());
+            //ModelBinders.Binders.Add(typeof (long), new NumberModalBinder());
+            //ModelBinders.Binders.Add(typeof (long?), new NumberModalBinder());
 
             if (addLogger)
                 DbInterception.Add(new DbLogger());
