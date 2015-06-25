@@ -13,7 +13,7 @@
    
    <files>
 	   <file src="bin\Release\bscheiman.Common.Aspnet.dll" target="lib\net40\bscheiman.Common.Aspnet.dll" />
-	   <file src="README.txt" target="README.txt" />
+	   <file src="README.txt" target="" />
 	   <file src="Web.config.install.xdt" target="content\web.config.install.xdt" />
    </files>
 </package>

@@ -13,14 +13,13 @@ namespace bscheiman.Common.Aspnet.Helpers {
     internal static class TrackingHelper {
         internal static void TrackEntities(DbContext ctx) {
             var hasUsers =
-                ctx.ChangeTracker.Entries()
-                   .Where(x => x.Entity.Is<IHasUsers>() && (x.State == EntityState.Added || x.State == EntityState.Modified));
+                ctx.ChangeTracker.Entries().Where(x => x.Entity.Is<IHasUsers>() && (x.State == EntityState.Added || x.State == EntityState.Modified));
             var hasDates =
-                ctx.ChangeTracker.Entries()
-                   .Where(x => x.Entity.Is<IHasDates>() && (x.State == EntityState.Added || x.State == EntityState.Modified));
-            var deleted = ctx.ChangeTracker.Entries().Where(x => x.Entity is ISoftDelete && x.State == EntityState.Deleted);
+                ctx.ChangeTracker.Entries().Where(x => x.Entity.Is<IHasDates>() && (x.State == EntityState.Added || x.State == EntityState.Modified));
+            var softDeleted =
+                ctx.ChangeTracker.Entries().Where(x => x.Entity is ISoftDelete && !(x.Entity is IHardDelete) && x.State == EntityState.Deleted);
 
-            string currentUsername = HttpContext.Current != null && HttpContext.Current.User != null
+            var currentUsername = HttpContext.Current != null && HttpContext.Current.User != null
                 ? HttpContext.Current.User.Identity.Name
                 : "Anonymous";
 
@@ -48,7 +47,7 @@ namespace bscheiman.Common.Aspnet.Helpers {
                     dateObject.DateCreated = DateUtil.NowDt;
             }
 
-            foreach (var entity in deleted) {
+            foreach (var entity in softDeleted) {
                 ((ISoftDelete) entity.Entity).IsDeleted = true;
 
                 entity.State = EntityState.Modified;

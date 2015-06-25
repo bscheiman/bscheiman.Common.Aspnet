@@ -202,6 +202,7 @@
     <Compile Include="Filters\StopwatchFilterAttribute.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\HttpRequestHeadersExtensions.cs" />
+    <Compile Include="Interfaces\IHardDelete.cs" />
     <Compile Include="Objects\BaseJson.cs" />
     <Compile Include="Utils\LogRequestsModule.cs" />
     <Compile Include="Utils\StartupManager.cs" />
