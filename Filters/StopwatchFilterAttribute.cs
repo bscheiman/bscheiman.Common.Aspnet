@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using bscheiman.Common.Helpers;
 
 #endregion
 
@@ -14,8 +15,10 @@ namespace bscheiman.Common.Aspnet.Filters {
             var stopwatch = (Stopwatch) actionExecutedContext.Request.Properties["Stopwatch"];
 
             if (stopwatch != null) {
-                actionExecutedContext.Response.Headers.Add("X-ExecutionTime",
-                    (stopwatch.ElapsedMilliseconds / 1000.0f).ToString("N2", CultureInfo.InvariantCulture));
+                Ignore.Exception(
+                                 () =>
+                                     actionExecutedContext.Response.Headers.Add("X-ExecutionTime",
+                                         (stopwatch.ElapsedMilliseconds / 1000.0f).ToString("N2", CultureInfo.InvariantCulture)));
             }
 
             return base.OnActionExecutedAsync(actionExecutedContext, cancellationToken);
